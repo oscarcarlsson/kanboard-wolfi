@@ -24,7 +24,7 @@ jobs:
       id: buildenv
 
     - name: Build the Docker image
-      run: just build --set repo "$repo" --set name "$name" ${{ steps.buildenv.outputs.date }}
+      run: just repo=$repo name=$name build ${{ steps.buildenv.outputs.date }}
 
     - uses: anchore/scan-action@v6
       with:
