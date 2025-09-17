@@ -6,6 +6,10 @@ on:
   pull_request:
     branches: [ "trunk" ]
 
+env:
+  repo: "oscarcarlsson"
+  name: "kanboard-wolfi"
+
 jobs:
   build:
     runs-on: ubuntu-latest
@@ -20,7 +24,7 @@ jobs:
       id: buildenv
 
     - name: Build the Docker image
-      run: just build ${{ steps.buildenv.outputs.date }}
+      run: just build repo=$repo name=$name ${{ steps.buildenv.outputs.date }}
 
     - uses: anchore/scan-action@v6
       with:
