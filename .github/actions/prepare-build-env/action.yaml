@@ -2,10 +2,6 @@ name: Prepare build env for project
 description: Checks out all relevant repos for building project plus installs just
 runs:
   using: "composite"
-  outputs:
-    date:
-      description: "Todays date"
-      value: ${{ steps.set-date.outputs.date }}
   steps:
     - id: set-date
       shell: bash
@@ -31,3 +27,8 @@ inputs:
   just_version:
     required: false
     default: '1.40.0'
+
+outputs:
+  date:
+    description: "Todays date"
+    value: ${{ steps.set-date.outputs.date }}
