@@ -1,4 +1,4 @@
-name: Docker Image CI
+name: Docker Image CI/CD
 
 on:
   push:
@@ -7,23 +7,20 @@ on:
     branches: [ "trunk" ]
 
 jobs:
-
   build:
     runs-on: ubuntu-latest
 
     steps:
-    - uses: extractions/setup-just@v3
+    - name: Prepare build environment
+      uses: ./.github/actions/prepare-build-env
       with:
-        just-version: '1.40.0'
-        
-    - uses: actions/checkout@v4
-
-    - uses: actions/checkout@v4
-      with:
-        repository: kanboard/kanboard
-        # 1.2.47
-        ref: 'b57deb7082797b791a3fa39dbcdc5e5c2b14b541'
-        path: 'app'
+        kanboard_ref: 'v1.2.47'
+      id: buildenv
     
     - name: Build the Docker image
-      run: just build $(date +%s)
+      run: just build ${{ steps.buildenv.outputs.date }}
+
+    - uses: anchore/scan-action@v6
+        with:
+          image: "$GITHUB_REPOSITORY:${{ steps.buildenv.outputs.date }}"
+          fail-build: true
