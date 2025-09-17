@@ -23,7 +23,7 @@ apk add --no-cache \
 EOF
 
 COPY --chown=82:82 ./app /var/www/html
-COPY nginx.conf /etc/nginx/nginx.conf
+COPY files/nginx.conf /etc/nginx/nginx.conf
 COPY files/php-fpmd-env.conf /etc/php/php-fpm.d/env.conf
 COPY files/php-fpm.conf /etc/php/php-fpm.conf
 COPY files/php-confd-local.ini /etc/php/conf.d/local.ini
