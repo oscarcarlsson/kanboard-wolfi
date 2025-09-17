@@ -23,7 +23,7 @@ jobs:
         repository: kanboard/kanboard
         # 1.2.47
         ref: 'b57deb7082797b791a3fa39dbcdc5e5c2b14b541'
-        path: 'kanboard-wolfi/app'
+        path: 'app'
     
     - name: Build the Docker image
       run: just build $(date +%s)
