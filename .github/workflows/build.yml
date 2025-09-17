@@ -21,6 +21,6 @@ jobs:
       run: just build ${{ steps.buildenv.outputs.date }}
 
     - uses: anchore/scan-action@v6
-        with:
-          image: "$GITHUB_REPOSITORY:${{ steps.buildenv.outputs.date }}"
-          fail-build: true
+      with:
+        image: "$GITHUB_REPOSITORY:${{ steps.buildenv.outputs.date }}"
+        fail-build: true
