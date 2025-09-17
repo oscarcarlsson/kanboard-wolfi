@@ -16,8 +16,6 @@ runs:
         just-version: ${{ inputs.just_version }}
 
     - uses: actions/checkout@v4
-
-    - uses: actions/checkout@v4
       with:
         repository: kanboard/kanboard
         ref: ${{ inputs.kanboard_ref }}

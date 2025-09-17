@@ -11,12 +11,14 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+    - uses: actions/checkout@v4
+
     - name: Prepare build environment
       uses: ./.github/actions/prepare-build-env
       with:
         kanboard_ref: 'v1.2.47'
       id: buildenv
-    
+
     - name: Build the Docker image
       run: just build ${{ steps.buildenv.outputs.date }}
 
