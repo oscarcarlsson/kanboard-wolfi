@@ -1,18 +1,12 @@
 {
   "extends": ["config:base"],
-  "packageRules": [
+  "regexManagers": [
     {
-      "description": "Uppdate VERSION with the latest Kanboard-release",
-      "packageNames": ["kanboard"],
-      "enabled": true,
-      "datasource": "github-releases",
-      "depType": "pin",
-      "registryUrls": ["https://github.com/kanboard/kanboard"],
-      "extractVersion": {
-	"fileMatch": ["^VERSION$"],
-	"matchStrings": ["^(?<version>v.*)$"]
-      },
-      "updateTypes": ["minor", "patch", "major"]
+      "fileMatch": ["^VERSION$"],
+      "matchStrings": ["^(v.*)$"],
+      "datasourceTemplate": "github-releases",
+      "depNameTemplate": "kanboard/kanboard",
+      "versioningTemplate": "semver"
     }
   ]
 }
