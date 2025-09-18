@@ -20,6 +20,20 @@ will most likely cause breaking changes for most current users.
 - ???
 - Profit!
 
+# Status
+
+As of 2025-09-18, this repository will run a weekly rebuild of the latest 
+released version of Kanboard.  This rebuild will be published under the 
+`latest` and the Kanboard version (currently v1.2.47) as a tag.
+
+# Future
+
+Future plans involve:
+
+- [ ] Matrix building the three latest Kanboard versions
+- [ ] x86 and aarch64
+- [ ] Dogfooding / using it myself
+
 [kanboard]: https://kanboard.org/
 [kanboard-repo]: https://github.com/kanboard/kanboard/
 [wolfi-php]: https://github.com/shyim/wolfi-php/
