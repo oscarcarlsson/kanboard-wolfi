@@ -1,0 +1,34 @@
+name: Prepare build env for project
+description: Checks out all relevant repos for building project plus installs just
+runs:
+  using: "composite"
+  steps:
+    - id: set-date
+      shell: bash
+      run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
+      
+    - uses: extractions/setup-just@v3
+      with:
+        just-version: ${{ inputs.just_version }}
+
+    - uses: actions/checkout@v4
+      with:
+        repository: kanboard/kanboard
+        ref: ${{ inputs.kanboard_ref }}
+        path: ${{ inputs.kanboard_path }}
+
+inputs:
+  kanboard_ref:
+    description: ref for kanboard project
+    required: true
+  kanboard_path:
+    required: false
+    default: 'app'
+  just_version:
+    required: false
+    default: '1.40.0'
+
+outputs:
+  date:
+    description: "Todays date"
+    value: ${{ steps.set-date.outputs.date }}
