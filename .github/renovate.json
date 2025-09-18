@@ -10,6 +10,7 @@
       "matchStrings": [
         "^(?<currentValue>v?\\d+\\.\\d+\\.\\d+)$"
       ],
+      "currentValueTemplate": "{{ currentValue }}",
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "kanboard/kanboard",
       "versioningTemplate": "semver"
