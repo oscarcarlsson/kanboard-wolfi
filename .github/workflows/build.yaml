@@ -43,7 +43,7 @@ jobs:
             # push/cron -> update latest
             type=raw,value=latest,enable={{is_default_branch}}
             # cron -> add date tag
-            type=raw,value=${{ steps.ver.outputs.date }},enable={{is_scheduled}}
+            # type=raw,value=${{ steps.ver.outputs.date }},enable={{is_scheduled}}
 
       - name: Log in to GHCR
         if: github.event_name != 'pull_request'
