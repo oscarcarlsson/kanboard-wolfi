@@ -1,9 +1,14 @@
 {
-  "extends": ["config:base"],
-  "regexManagers": [
+  "customManagers": [
     {
-      "fileMatch": ["^VERSION$"],
-      "matchStrings": ["^(v.*)$"],
+      "customType": "regex",
+      "managerFilePatterns": [
+        "^VERSION$"
+      ],
+      "matchStrings": [
+        "^(?<currentValue>v?\\d+\\.\\d+\\.\\d+)$"
+      ],
+      "currentValueTemplate": "{{ currentValue }}",
       "datasourceTemplate": "github-releases",
       "depNameTemplate": "kanboard/kanboard",
       "versioningTemplate": "semver"
