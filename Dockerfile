@@ -1,5 +1,5 @@
 # https://github.com/shyim/wolfi-php/tree/main/images/nginx
-FROM ghcr.io/shyim/wolfi-php/nginx:8.4
+FROM ghcr.io/shyim/wolfi-php/nginx:8.5
 VOLUME ["/var/www/html/data", "/var/www/html/plugins", "/etc/nginx/ssl"]
 EXPOSE 8000
 
