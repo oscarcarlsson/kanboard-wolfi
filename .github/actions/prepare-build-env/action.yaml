@@ -7,7 +7,7 @@ runs:
       shell: bash
       run: echo "date=$(date +'%Y-%m-%d')" >> $GITHUB_OUTPUT
       
-    - uses: extractions/setup-just@v3
+    - uses: extractions/setup-just@v4
       with:
         just-version: ${{ inputs.just_version }}
 
