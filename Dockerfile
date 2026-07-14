@@ -3,11 +3,6 @@ FROM alpine:3.24
 VOLUME ["/var/www/html/data", "/var/www/html/plugins", "/etc/nginx/ssl"]
 EXPOSE 8000
 
-# Remove wolfi-php test folder, which otherwise contains a phpinfo() page
-RUN <<EOF
-[ -d /var/www/html/public ] && rm -rf /var/www/html/public
-EOF
-
 RUN <<EOF
 apk add --no-cache \
     php84-fpm \
