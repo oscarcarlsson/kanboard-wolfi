@@ -1,5 +1,5 @@
-# https://github.com/shyim/wolfi-php/tree/main/images/nginx
-FROM ghcr.io/shyim/wolfi-php/nginx:8.5
+FROM alpine:3.24
+
 VOLUME ["/var/www/html/data", "/var/www/html/plugins", "/etc/nginx/ssl"]
 EXPOSE 8000
 
@@ -10,23 +10,26 @@ EOF
 
 RUN <<EOF
 apk add --no-cache \
-    php-8.4-pdo \
-    php-8.4-pdo_sqlite \
-    php-8.4-pdo_sqlite-config \
-    php-8.4-gd \
-    php-8.4-mbstring \
-    php-8.4-openssl \
-    php-8.4-ctype \
-    php-8.4-dom \
-    php-8.4-simplexml \
-    php-8.4-xml
+    php84-fpm \
+    php84-pdo \
+    php84-pdo_sqlite \
+    php84-pdo_pgsql \
+    php84-pdo_mysql \
+    php84-gd \
+    php84-mbstring \
+    php84-opcache \
+    php84-openssl \
+    php84-ctype \
+    php84-dom \
+    php84-simplexml \
+    php84-xml
 EOF
 
 COPY --chown=82:82 ./app /var/www/html
 COPY files/nginx.conf /etc/nginx/nginx.conf
-COPY files/php-fpmd-env.conf /etc/php/php-fpm.d/env.conf
-COPY files/php-fpm.conf /etc/php/php-fpm.conf
-COPY files/php-confd-local.ini /etc/php/conf.d/local.ini
+COPY files/php-fpmd-env.conf /etc/php84/php-fpm.d/env.conf
+COPY files/php-fpm.conf /etc/php84/php-fpm.conf
+COPY files/php-confd-local.ini /etc/php84/conf.d/local.ini
 USER www-data
 HEALTHCHECK --start-period=3s --timeout=5s \
   CMD curl -f http://localhost/healthcheck.php || exit 1
