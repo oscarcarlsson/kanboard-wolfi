@@ -7,6 +7,8 @@ FROM alpine:3.24
 
 RUN <<EOF
 apk add --no-cache \
+    s6 \
+    nginx \
     php84-fpm \
     php84-pdo \
     php84-pdo_sqlite \
@@ -22,6 +24,8 @@ apk add --no-cache \
     php84-simplexml \
     php84-xml \
     php84
+
+adduser -u 82 -D -S -G www-data www-data
 EOF
 
 COPY --from=fetcher /var/www/html/kanboard/kanboard-1.2.52/ /var/www/html/
@@ -30,6 +34,10 @@ COPY files/nginx.conf /etc/nginx/nginx.conf
 COPY files/php-fpmd-env.conf /etc/php84/php-fpm.d/env.conf
 COPY files/php-fpm.conf /etc/php84/php-fpm.conf
 COPY files/php-confd-local.ini /etc/php84/conf.d/local.ini
+COPY --chmod=750 files/services.d/php/run /etc/services.d/php/run
+COPY --chmod=750 files/services.d/nginx/run /etc/services.d/nginx/run
+COPY --chmod=750 files/services.d/cron/run /etc/services.d/cron/run
+COPY --chmod=750 files/services.d/.s6-svscan/finish /etc/services.d/.s6-svscan/finish
 
 VOLUME ["/var/www/html/data", "/var/www/html/plugins", "/etc/nginx/ssl"]
 EXPOSE 8000
@@ -38,3 +46,5 @@ USER www-data
 
 HEALTHCHECK --start-period=3s --timeout=5s \
   CMD curl -f http://localhost/healthcheck.php || exit 1
+
+ENTRYPOINT ["/usr/bin/s6-svscan", "/etc/services.d"]
