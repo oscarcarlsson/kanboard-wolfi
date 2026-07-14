@@ -26,6 +26,12 @@ apk add --no-cache \
     php84
 
 adduser -u 82 -D -S -G www-data www-data
+mkdir -m 0755 -p /etc/services.d/
+mkdir -m 0755 -p /etc/services.d/cron
+mkdir -m 0755 -p /etc/services.d/nginx
+mkdir -m 0755 -p /etc/services.d/php
+mkdir -m 0755 -p /etc/services.d/.s6-svscan
+
 EOF
 
 COPY --from=fetcher /var/www/html/kanboard/kanboard-1.2.52/ /var/www/html/
