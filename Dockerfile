@@ -1,8 +1,9 @@
 # syntax=docker/dockerfile:1
-FROM alpine:3.24
+FROM alpine:3.24 AS fetcher
 
-VOLUME ["/var/www/html/data", "/var/www/html/plugins", "/etc/nginx/ssl"]
-EXPOSE 8000
+ADD --unpack=true --chown=82:82 https://github.com/kanboard/kanboard/archive/refs/tags/v1.2.52.tar.gz /var/www/html/kanboard/
+
+FROM alpine:3.24
 
 RUN <<EOF
 apk add --no-cache \
@@ -17,16 +18,22 @@ apk add --no-cache \
     php84-openssl \
     php84-ctype \
     php84-dom \
+    php84-session \
     php84-simplexml \
-    php84-xml
+    php84-xml \
+    php84
 EOF
 
-ADD --unpack=true --chown=82:82 https://github.com/kanboard/kanboard/archive/refs/tags/v1.2.52.tar.gz /var/www/html
+COPY --from=fetcher /var/www/html/kanboard/kanboard-1.2.52/ /var/www/html/
 
 COPY files/nginx.conf /etc/nginx/nginx.conf
 COPY files/php-fpmd-env.conf /etc/php84/php-fpm.d/env.conf
 COPY files/php-fpm.conf /etc/php84/php-fpm.conf
 COPY files/php-confd-local.ini /etc/php84/conf.d/local.ini
+
+VOLUME ["/var/www/html/data", "/var/www/html/plugins", "/etc/nginx/ssl"]
+EXPOSE 8000
+
 USER www-data
 
 HEALTHCHECK --start-period=3s --timeout=5s \
