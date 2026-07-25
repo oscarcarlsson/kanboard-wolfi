@@ -1,7 +1,7 @@
 # syntax=docker/dockerfile:1
 FROM alpine:3.24 AS fetcher
 
-ADD --unpack=true --chown=82:82 https://github.com/kanboard/kanboard/archive/refs/tags/v1.2.52.tar.gz /var/www/html/kanboard/
+ADD --unpack=true --chown=82:82 https://github.com/kanboard/kanboard/archive/refs/tags/v1.2.53.tar.gz /var/www/html/kanboard/
 
 FROM alpine:3.24
 
@@ -29,7 +29,7 @@ apk add --no-cache \
 adduser -u 82 -D -S -G www-data www-data
 EOF
 
-COPY --from=fetcher /var/www/html/kanboard/kanboard-1.2.52/ /var/www/html/
+COPY --from=fetcher /var/www/html/kanboard/kanboard-1.2.53/ /var/www/html/
 
 COPY files/php-fpmd-env.conf /etc/php85/php-fpm.d/env.conf
 COPY files/php-fpm.conf /etc/php85/php-fpm.conf
