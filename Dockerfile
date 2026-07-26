@@ -13,7 +13,6 @@ apk add --no-cache \
     php85-gd \
     php85-ldap \
     php85-mbstring \
-    php85-opcache \
     php85-openssl \
     php85-pdo \
     php85-pdo_mysql \
