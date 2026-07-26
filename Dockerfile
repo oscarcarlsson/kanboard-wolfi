@@ -30,10 +30,7 @@ adduser -u 82 -D -S -G www-data www-data
 EOF
 
 COPY --from=fetcher /var/www/html/kanboard/kanboard-1.2.53/ /var/www/html/
-
-COPY files/php-fpmd-env.conf /etc/php85/php-fpm.d/env.conf
-COPY files/php-fpm.conf /etc/php85/php-fpm.conf
-COPY files/php-confd-local.ini /etc/php85/conf.d/local.ini
+COPY rootfs/ /
 
 VOLUME ["/var/www/html/data", "/var/www/html/plugins"]
 EXPOSE 8000
