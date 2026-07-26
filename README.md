@@ -24,7 +24,7 @@ experiment is successful I probably will submit a PR to upstream.
 
 As of 2025-09-18, this repository will run a weekly rebuild of the latest
 released version of Kanboard.  This rebuild will be published under the
-`latest` and the Kanboard version (currently v1.2.47) as a tag.
+`latest` and the Kanboard version (currently v1.2.53) as a tag.
 
 ## Future
 
