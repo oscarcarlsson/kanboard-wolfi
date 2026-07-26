@@ -45,4 +45,4 @@ HEALTHCHECK --start-period=3s --timeout=5s \
   CMD curl -f http://localhost/healthcheck.php || exit 1
 
 WORKDIR /var/www/html
-ENTRYPOINT ["php-fpm85"]
+ENTRYPOINT ["/init"]
