@@ -13,7 +13,6 @@ apk add --no-cache \
     php85-gd \
     php85-ldap \
     php85-mbstring \
-    php85-opcache \
     php85-openssl \
     php85-pdo \
     php85-pdo_mysql \
@@ -24,16 +23,18 @@ apk add --no-cache \
     php85-xml \
     php85-zip \
     php85-curl \
-    php85
+    php85 \
+    caddy \
+    s6-overlay
 
 adduser -u 82 -D -S -G www-data www-data
+addgroup caddy www-data
+
+rm -rf /etc/s6-overlay/
 EOF
 
 COPY --from=fetcher /var/www/html/kanboard/kanboard-1.2.53/ /var/www/html/
-
-COPY files/php-fpmd-env.conf /etc/php85/php-fpm.d/env.conf
-COPY files/php-fpm.conf /etc/php85/php-fpm.conf
-COPY files/php-confd-local.ini /etc/php85/conf.d/local.ini
+COPY rootfs/ /
 
 VOLUME ["/var/www/html/data", "/var/www/html/plugins"]
 EXPOSE 8000
@@ -43,4 +44,5 @@ USER www-data
 HEALTHCHECK --start-period=3s --timeout=5s \
   CMD curl -f http://localhost/healthcheck.php || exit 1
 
+WORKDIR /var/www/html
 ENTRYPOINT ["php-fpm85"]
