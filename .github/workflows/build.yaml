@@ -18,6 +18,7 @@ jobs:
     permissions:
       contents: read
       packages: write
+
     steps:
       - name: Checkout
         uses: actions/checkout@v7
@@ -46,7 +47,7 @@ jobs:
             # push/cron -> update latest
             type=raw,value=latest,enable={{is_default_branch}}
             # cron -> add date tag
-            # type=raw,value=${{ steps.ver.outputs.date }},enable={{is_scheduled}}
+            type=raw,value=${{ steps.ver.outputs.date }},enable={{is_scheduled}}
 
       - name: Log in to GHCR
         if: github.event_name != 'pull_request'
@@ -55,12 +56,6 @@ jobs:
           registry: ghcr.io
           username: ${{ github.actor }}
           password: ${{ secrets.GITHUB_TOKEN }}
-
-      - uses: actions/checkout@v7
-        with:
-          repository: kanboard/kanboard
-          ref: ${{ steps.ver.outputs.version }}
-          path: app
 
       - name: Set up Buildx
         uses: docker/setup-buildx-action@v4
