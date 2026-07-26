@@ -29,8 +29,6 @@ apk add --no-cache \
 
 adduser -u 82 -D -S -G www-data www-data
 addgroup caddy www-data
-
-rm -rf /etc/s6-overlay/
 EOF
 
 COPY --from=fetcher /var/www/html/kanboard/kanboard-1.2.53/ /var/www/html/
