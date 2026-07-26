@@ -24,9 +24,14 @@ apk add --no-cache \
     php85-xml \
     php85-zip \
     php85-curl \
-    php85
+    php85 \
+    caddy \
+    s6-overlay
 
 adduser -u 82 -D -S -G www-data www-data
+addgroup caddy www-data
+
+rm -rf /etc/s6-overlay/
 EOF
 
 COPY --from=fetcher /var/www/html/kanboard/kanboard-1.2.53/ /var/www/html/
@@ -40,4 +45,5 @@ USER www-data
 HEALTHCHECK --start-period=3s --timeout=5s \
   CMD curl -f http://localhost/healthcheck.php || exit 1
 
+WORKDIR /var/www/html
 ENTRYPOINT ["php-fpm85"]
